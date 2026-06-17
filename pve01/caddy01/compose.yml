@@ -3,12 +3,9 @@ services:
     image: ghcr.io/caddybuilds/caddy-cloudflare:latest
     container_name: caddy
     restart: unless-stopped
+    network_mode: host
     cap_add:
       - NET_ADMIN
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"   # HTTP/3
     env_file:
       - .env
     volumes:
