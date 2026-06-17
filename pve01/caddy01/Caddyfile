@@ -1,0 +1,8 @@
+test.joeloveless.net {
+	root * /usr/share/caddy
+	file_server
+
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+	}
+}

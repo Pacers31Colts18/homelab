@@ -1,17 +1,8 @@
-services:
-  caddy:
-    image: caddy:<version>
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    volumes:
-      - ./conf:/etc/caddy
-      - ./site:/srv
-      - caddy_data:/data
-      - caddy_config:/config
+test.edwardes.xyz {
+    root * /usr/share/caddy
+    file_server
 
-volumes:
-  caddy_data:
-  caddy_config:
+    tls {
+        dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+    }
+}
