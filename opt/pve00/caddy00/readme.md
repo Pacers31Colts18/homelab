@@ -97,7 +97,7 @@ your.domain.com {
 docker compose up -d
 docker compose logs -f caddy
 
-##Adding a New Site
+## Adding a New Site
 
 ### Edit the Caddyfile and add a new block:
 
