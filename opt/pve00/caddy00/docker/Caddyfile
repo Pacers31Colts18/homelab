@@ -1,1 +1,99 @@
+nas.joeloveless.net {
+	reverse_proxy 192.168.4.125:9999
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
 
+pve00.joeloveless.net {
+	reverse_proxy https://192.168.4.2:8006 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+dns00.joeloveless.net {
+	reverse_proxy 192.168.4.42:5380
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+dns01.joeloveless.net {
+	reverse_proxy 192.168.4.33:5380
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+dns02.joeloveless.net {
+	reverse_proxy 192.168.4.125:5380
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+bazarr.joeloveless.net {
+	reverse_proxy 192.168.4.125:6767
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+sonarr.joeloveless.net {
+	reverse_proxy 192.168.4.125:8989
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+radarr.joeloveless.net {
+	reverse_proxy 192.168.4.125:7878
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+lidarr.joeloveless.net {
+	reverse_proxy 192.168.4.125:8686
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+nzbget.joeloveless.net {
+	reverse_proxy 192.168.4.125:6789
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+plex.joeloveless.net {
+	reverse_proxy 192.168.4.125:32400
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+prowlarr.joeloveless.net {
+	reverse_proxy 192.168.4.125:9696
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
