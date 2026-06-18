@@ -30,13 +30,15 @@ sudo chown -R jloveless123:jloveless123 /opt/pve00/caddy00
 ```bash
 sudo mkdir -p /opt/pve00/caddy00/docker
 sudo nano /etc/docker/daemon.json
+```
 Paste this, save with Ctrl+O then Ctrl+X:
 
-
+```bash
 {
   "data-root": "/opt/pve00/caddy00/docker"
 }
-
+```
+```bash
 sudo systemctl restart docker
 docker info | grep "Docker Root Dir"
 ```
@@ -116,15 +118,21 @@ newsite.joeloveless.net {
 ```bash
 docker exec caddy caddy reload --config /etc/caddy/Caddyfile
 ```
-## Committing to GitHub
+## Syncing with GitHub
+
+### Push changes (after editing files on Caddy host)
+```bash
+cp /opt/pve00/caddy00/docker/Caddyfile ~/homelab/opt/pve00/caddy00/docker/Caddyfile
+cd ~/homelab
+git add opt/pve00/caddy00/
+git commit -m "update caddy config"
+git push
+```
+
+### Pull changes (apply updates pushed from another machine)
 ```bash
 cd ~/homelab
-mkdir -p opt/pve00/caddy00
-cp /opt/pve00/caddy00/readme.md opt/pve00/caddy00/
-cp /opt/pve00/caddy00/docker/compose.yml opt/pve00/caddy00/
-cp /opt/pve00/caddy00/docker/Caddyfile opt/pve00/caddy00/
-cp /opt/pve00/caddy00/docker/.env.example opt/pve00/caddy00/
-git add opt/pve00/caddy00/
-git commit -m "Add Caddy config"
-git push
+git pull
+bash deploy.sh
+docker exec caddy caddy reload --config /etc/caddy/Caddyfile --force
 ```
