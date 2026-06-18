@@ -1,4 +1,7 @@
 ## Install packages
+- Docker
+- Github CLI
+- Tailscale
 
 sudo apt-get update && sudo apt-get upgrade -y && \
 sudo apt-get install -y curl gnupg apt-transport-https ca-certificates lsb-release git && \
