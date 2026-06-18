@@ -1,0 +1,27 @@
+nas.joeloveless.net {
+    reverse_proxy 192.168.4.125:9999
+
+    tls {
+        dns cloudflare {
+            api_token {env.CLOUDFLARE_API_TOKEN}
+        }
+    }
+}
+
+dns01.joeloveless.net {
+      reverse_proxy 192.168.4.33:5380
+      tls {
+          dns cloudflare {
+              api_token {env.CLOUDFLARE_API_TOKEN}
+          }
+      }
+}	
+
+dns02.joeloveless.net {
+      reverse_proxy 192.168.4.125:5380
+      tls {
+          dns cloudflare {
+              api_token {env.CLOUDFLARE_API_TOKEN}
+          }
+      }
+}
