@@ -116,7 +116,18 @@ newsite.joeloveless.net {
 ```
 ## Reload Caddy (no restart needed):
 ```bash
-docker exec caddy caddy reload --config /etc/caddy/Caddyfile
+docker exec caddy caddy reload --config /etc/caddy/Caddyfile --force
+```
+
+## Restart Caddy (if reload doesn't pick up changes):
+```bash
+docker compose -f /opt/pve00/caddy00/docker/compose.yml restart
+```
+
+## Logs:
+```bash
+# Last 100 lines and follow
+docker logs --tail 100 -f caddy
 ```
 ## Syncing with GitHub
 
