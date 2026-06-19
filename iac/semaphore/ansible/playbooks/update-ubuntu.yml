@@ -1,0 +1,26 @@
+---
+- name: Update Ubuntu
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: dist
+
+    - name: Remove unused packages
+      apt:
+        autoremove: true
+        purge: true
+
+    - name: Check if reboot is required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+
+    - name: Reboot if required
+      reboot:
+      when: reboot_required.stat.exists
