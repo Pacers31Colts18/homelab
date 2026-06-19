@@ -1,0 +1,19 @@
+services:
+  semaphore:
+    image: semaphoreui/semaphore:latest
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      SEMAPHORE_DB_DIALECT: sqlite
+      SEMAPHORE_DB: /etc/semaphore/semaphore.sqlite
+      SEMAPHORE_ADMIN_NAME: jloveless123
+      SEMAPHORE_ADMIN_EMAIL: joe@joeloveless.com
+      SEMAPHORE_ADMIN: jloveless123
+    volumes:
+      - semaphore-data:/etc/semaphore
+      - ~/.ssh:/home/semaphore/.ssh:ro
+
+volumes:
+  semaphore-data:
