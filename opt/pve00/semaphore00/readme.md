@@ -58,6 +58,7 @@ docker volume create semaphore_data
 ```
 ### Create compose.yml:
 
+```yaml
 services:
   semaphore:
     image: semaphoreui/semaphore:latest
@@ -77,28 +78,125 @@ services:
 
 volumes:
   semaphore-data:
-
-## Create .env file
-```bash
-touch .env
 ```
 
-```bash
-nano.env
-```
+### Create .env:
 
 ```bash
 SEMAPHORE_ADMIN_PASSWORD=your-admin-password
 SEMAPHORE_ACCESS_KEY_ENCRYPTION=your-base64-encryption-key
 ```
+
+Generate the encryption key with:
+```bash
+head -c32 /dev/urandom | base64
+```
+
+### Start Semaphore:
+```bash
+docker compose up -d
+```
+
+## Target Host Setup
+
+On each host you want to manage with Semaphore:
+
+### Create the semaphore user:
+```bash
+sudo adduser semaphore
+sudo usermod -aG sudo semaphore
+```
+
+### Enable passwordless sudo:
+```bash
+sudo visudo
+```
+Add at the bottom:
+```
+semaphore ALL=(ALL) NOPASSWD: ALL
+```
+
+### Copy SSH key to the new user:
+```bash
+sudo mkdir -p /home/semaphore/.ssh
+sudo cp ~/.ssh/authorized_keys /home/semaphore/.ssh/
+sudo chown -R semaphore:semaphore /home/semaphore/.ssh
+sudo chmod 700 /home/semaphore/.ssh
+sudo chmod 600 /home/semaphore/.ssh/authorized_keys
+```
+
+## Semaphore UI Setup
+
+### 1. Key Store
+Add your SSH private key (`cat ~/.ssh/id_ed25519`), including the `BEGIN` and `END` lines.
+
+### 2. Environment
+Create one named "Default" (can be empty).
+
+### 3. Inventory
+Create new, type Static, format YAML:
+```yaml
+all:
+  hosts:
+    dns00:
+      ansible_host: 192.168.4.42
+      ansible_user: semaphore
+```
+
+### 4. Repository
+Point to your homelab repo and select the SSH key from the Key Store.
+
+### 5. Task Template
+- Name: Update Ubuntu
+- Playbook: path to your playbook (e.g. `playbooks/update-ubuntu.yml`)
+- Inventory: select the one you created
+- Environment: select the one you created
+
+## Playbooks
+
+### Update Ubuntu (`playbooks/update-ubuntu.yml`):
+```yaml
+---
+- name: Update Ubuntu
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: dist
+
+    - name: Remove unused packages
+      apt:
+        autoremove: true
+        purge: true
+
+    - name: Check if reboot is required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+
+    - name: Reboot if required
+      reboot:
+      when: reboot_required.stat.exists
+```
+
+## Logs
+```bash
+docker logs -f semaphore
+docker logs --tail 100 semaphore
+```
+
 ## Syncing with GitHub
 
-### Push changes (after editing files on Caddy host)
+### Push changes (after editing files on this host)
 ```bash
-cp /opt/pve00/caddy00/docker/Caddyfile ~/homelab/opt/pve00/caddy00/docker/Caddyfile
 cd ~/homelab
-git add opt/pve00/caddy00/
-git commit -m "update caddy config"
+git add opt/pve00/semaphore00/
+git commit -m "update semaphore config"
 git push
 ```
 
@@ -107,5 +205,4 @@ git push
 cd ~/homelab
 git pull
 bash deploy.sh
-docker exec caddy caddy reload --config /etc/caddy/Caddyfile --force
 ```
