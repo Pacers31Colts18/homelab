@@ -6,6 +6,14 @@ nas.joeloveless.net {
 	}
 }
 
+semaphore00.joeloveless.net {
+	reverse_proxy 192.168.4.25:3000
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
 pve00.joeloveless.net {
 	reverse_proxy https://192.168.4.2:8006 {
 		transport http {
