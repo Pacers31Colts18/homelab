@@ -13,8 +13,8 @@ provider "proxmox" {
   insecure  = true
 
   ssh {
-    agent    = false
-    username = var.proxmox_ssh_user
-    password = var.proxmox_ssh_password
+    agent       = false
+    username    = "root"
+    known_hosts = ""
   }
 }
