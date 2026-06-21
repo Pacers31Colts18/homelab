@@ -6,6 +6,14 @@ nas.joeloveless.net {
 	}
 }
 
+pulse00.joeloveless.net {
+	reverse_proxy 192.168.4.24:7655
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
 semaphore00.joeloveless.net {
 	reverse_proxy 192.168.4.25:3000
 	tls {
@@ -16,6 +24,18 @@ semaphore00.joeloveless.net {
 
 pve00.joeloveless.net {
 	reverse_proxy https://192.168.4.2:8006 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
+pve01.joeloveless.net {
+	reverse_proxy https://192.168.4.3:8006 {
 		transport http {
 			tls_insecure_skip_verify
 		}
