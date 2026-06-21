@@ -1,0 +1,17 @@
+---
+- name: Set hostname
+  hosts: all
+  become: true
+  tasks:
+    - name: Set hostname
+      hostname:
+        name: "{{ new_hostname }}"
+
+    - name: Update /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^127\.0\.1\.1'
+        line: "127.0.1.1 {{ new_hostname }}"
+
+    - name: Reboot
+      reboot:
