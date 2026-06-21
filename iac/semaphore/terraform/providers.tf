@@ -13,8 +13,9 @@ provider "proxmox" {
   insecure  = true
 
   ssh {
-    agent       = false
-    username    = "root"
-    known_hosts = ""
+    agent = false
+    username = "root"
   }
+
+  tmp_dir = "/var/tmp"
 }
