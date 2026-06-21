@@ -1,8 +1,9 @@
 ---
-- name: Install Docker
+- name: Install and Configure Docker
   hosts: all
   become: true
   tasks:
+    # Install Docker
     - name: Install prerequisites
       apt:
         name:
@@ -56,3 +57,51 @@
         name: jloveless123
         groups: docker
         append: true
+
+    # Configure secondary disk
+    - name: Format secondary disk
+      filesystem:
+        fstype: ext4
+        dev: /dev/sdb
+
+    - name: Create mount point
+      file:
+        path: "/opt/pve00/{{ ansible_hostname }}"
+        state: directory
+
+    - name: Mount secondary disk
+      mount:
+        path: "/opt/pve00/{{ ansible_hostname }}"
+        src: /dev/sdb
+        fstype: ext4
+        opts: defaults
+        passno: "2"
+        state: mounted
+
+    - name: Set ownership
+      file:
+        path: "/opt/pve00/{{ ansible_hostname }}"
+        owner: jloveless123
+        group: jloveless123
+        recurse: true
+
+    # Point Docker to secondary disk
+    - name: Create Docker data directory
+      file:
+        path: "/opt/pve00/{{ ansible_hostname }}/docker"
+        state: directory
+        owner: jloveless123
+        group: jloveless123
+
+    - name: Configure Docker data-root
+      copy:
+        dest: /etc/docker/daemon.json
+        content: |
+          {
+            "data-root": "/opt/pve00/{{ ansible_hostname }}/docker"
+          }
+
+    - name: Restart Docker
+      systemd:
+        name: docker
+        state: restarted
