@@ -15,5 +15,19 @@ resource "proxmox_virtual_environment_vm" "vm" {
     vm_id = data.proxmox_virtual_environment_vms.template.vms[0].vm_id
   }
 
+  initialization {
+    dns {
+      domain = "local"
+    }
+
+    ip_config {
+      ipv4 {
+        address = "dhcp"
+      }
+    }
+
+    hostname = var.vm_name
+  }
+
   started = true
 }
