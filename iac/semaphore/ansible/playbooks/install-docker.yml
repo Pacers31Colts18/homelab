@@ -1,4 +1,5 @@
 - name: Installing Docker
+  hosts: all
   tasks:
     - name: Check if Docker is installed
       become: yes
