@@ -13,8 +13,9 @@ provider "proxmox" {
   insecure  = true
 
   ssh {
-    agent = false
-    username = "root"
+    agent       = false
+    username    = "root"
+    private_key = file("/home/semaphore/.ssh/id_semaphore")
   }
 
   tmp_dir = "/var/tmp"
