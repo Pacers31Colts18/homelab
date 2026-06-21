@@ -26,16 +26,17 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   initialization {
     dns {
-      domain = "local"
+      domain  = "local"
+      servers = []
     }
+
+    hostname = var.vm_name
 
     ip_config {
       ipv4 {
         address = "dhcp"
       }
     }
-
-    hostname = var.vm_name
   }
 
   started = true
