@@ -40,11 +40,6 @@ resource "proxmox_virtual_environment_vm" "vm" {
   }
 
   initialization {
-    dns {
-      domain  = "local"
-      servers = []
-    }
-
     ip_config {
       ipv4 {
         address = "dhcp"
