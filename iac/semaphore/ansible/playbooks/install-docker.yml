@@ -105,3 +105,10 @@
       systemd:
         name: docker
         state: restarted
+
+    - name: Set ownership after Docker restart
+      file:
+        path: "/opt/pve00/{{ ansible_hostname }}"
+        owner: jloveless123
+        group: jloveless123
+        recurse: true
