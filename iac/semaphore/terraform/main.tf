@@ -7,21 +7,6 @@ data "proxmox_virtual_environment_vms" "template" {
   }
 }
 
-resource "proxmox_virtual_environment_file" "cloud_config" {
-  content_type = "snippets"
-  datastore_id = "local"
-  node_name    = var.proxmox_node
-
-  source_raw {
-    data      = <<-EOF
-    #cloud-config
-    hostname: ${var.vm_name}
-    manage_etc_hosts: true
-    EOF
-    file_name = "${var.vm_name}-cloud-config.yaml"
-  }
-}
-
 resource "proxmox_virtual_environment_vm" "vm" {
   name      = var.vm_name
   node_name = var.proxmox_node
@@ -37,16 +22,6 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   memory {
     dedicated = var.memory
-  }
-
-  initialization {
-    ip_config {
-      ipv4 {
-        address = "dhcp"
-      }
-    }
-
-    meta_data_file_id = proxmox_virtual_environment_file.cloud_config.id
   }
 
   started = true
