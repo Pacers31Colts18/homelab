@@ -30,7 +30,7 @@ pveum role add TerraformRole -privs "Datastore.Allocate Datastore.AllocateSpace 
 pveum user token add terraform@pve terraform-token
 ```
 
-Save the token secret -- it is only shown once.
+Save the token secret.
 
 Assign permissions:
 
@@ -61,7 +61,6 @@ Ensure your template (VM 999) has:
 See [proxmox/templates/readme.md](../../proxmox/templates/readme.md) for full template creation steps.
 
 **Important corrections from the template readme:**
-- Use `--vga std` instead of `--vga serial0` to avoid kernel panics
 - Set `--cpu host` to support amd64v3 images
 - Set `--ciuser jloveless123 --cipassword <password>` for console access
 - Use `--cicustom "user=local:snippets/semaphore-user.yml"` (not `vendor=`) for the cloud-init snippet to be applied correctly
