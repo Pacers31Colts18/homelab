@@ -27,3 +27,13 @@ variable "template_name" {
 variable "vm_name" {
   type = string
 }
+
+variable "cpu_cores" {
+  type    = number
+  default = 2
+}
+
+variable "memory" {
+  type    = number
+  default = 2048
+}

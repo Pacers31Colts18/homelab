@@ -15,6 +15,15 @@ resource "proxmox_virtual_environment_vm" "vm" {
     vm_id = data.proxmox_virtual_environment_vms.template.vms[0].vm_id
   }
 
+  cpu {
+    cores = var.cpu_cores
+    type  = "host"
+  }
+
+  memory {
+    dedicated = var.memory
+  }
+
   initialization {
     dns {
       domain = "local"
