@@ -1,0 +1,13 @@
+services:
+  pulse:
+    image: rcourtman/pulse:latest
+    container_name: pulse
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - pulse-data:/data
+    environment:
+      - TZ=America/Chicago
+
+volumes:
+  pulse-data:

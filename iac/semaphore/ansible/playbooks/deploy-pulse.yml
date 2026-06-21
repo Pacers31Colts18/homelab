@@ -1,0 +1,21 @@
+---
+- name: Deploy Pulse
+  hosts: "{{ target_hosts | default('pulse00') }}"
+  become: true
+  tasks:
+    - name: Create app directory
+      file:
+        path: /opt/pulse
+        state: directory
+        mode: "0755"
+
+    - name: Copy docker-compose file
+      copy:
+        src: ../files/pulse/docker-compose.yml
+        dest: /opt/pulse/docker-compose.yml
+        mode: "0644"
+
+    - name: Start Pulse
+      command: docker compose up -d
+      args:
+        chdir: /opt/pulse
