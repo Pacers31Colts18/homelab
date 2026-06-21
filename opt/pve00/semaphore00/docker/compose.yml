@@ -12,10 +12,10 @@ services:
       SEMAPHORE_ADMIN_EMAIL: joe@joeloveless.com
       SEMAPHORE_ADMIN: jloveless123
     volumes:
-      - semaphore-data:/etc/semaphore
+      - semaphore_data:/etc/semaphore
       - ~/.ssh:/home/semaphore/.ssh:ro
       - terraform-state:/terraform-state
 
 volumes:
-  semaphore-data:
+  semaphore_data:
   terraform-state:
