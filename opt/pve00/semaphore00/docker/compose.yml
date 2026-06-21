@@ -13,7 +13,7 @@ services:
       SEMAPHORE_ADMIN: jloveless123
     volumes:
       - semaphore_data:/etc/semaphore
-      - ~/.ssh:/home/semaphore/.ssh:ro
+      - ~/.ssh:/home/semaphore/.ssh
       - terraform-state:/terraform-state
 
 volumes:
