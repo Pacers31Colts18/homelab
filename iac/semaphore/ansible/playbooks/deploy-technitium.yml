@@ -15,6 +15,10 @@
         dest: /opt/technitium/docker-compose.yml
         mode: "0644"
 
+    - name: Stop existing Technitium container
+      command: docker rm -f Technitium
+      ignore_errors: true
+
     - name: Start Technitium
       command: docker compose up -d
       args:
