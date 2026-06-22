@@ -27,7 +27,6 @@ qm set 999 --scsi1 local-lvm:16
 ```bash
 qm set 999 --ide2 local-lvm:cloudinit
 qm set 999 --boot order=scsi0
-qm set 999 --serial0 socket --vga serial0
 ```
 
 ## Cloud-Init Snippet (Semaphore User)
