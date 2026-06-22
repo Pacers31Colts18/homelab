@@ -66,12 +66,12 @@
 
     - name: Create mount point
       file:
-        path: "/opt/pve00/{{ ansible_facts['hostname'] }}"
+        path: "/opt/{{ ansible_facts['hostname'] }}"
         state: directory
 
     - name: Mount secondary disk
       mount:
-        path: "/opt/pve00/{{ ansible_facts['hostname'] }}"
+        path: "/opt/{{ ansible_facts['hostname'] }}"
         src: /dev/sdb
         fstype: ext4
         opts: defaults
@@ -80,7 +80,7 @@
 
     - name: Set ownership
       file:
-        path: "/opt/pve00/{{ ansible_facts['hostname'] }}"
+        path: "/opt/{{ ansible_facts['hostname'] }}"
         owner: jloveless123
         group: jloveless123
 
@@ -90,7 +90,7 @@
         dest: /etc/docker/daemon.json
         content: |
           {
-            "data-root": "/opt/pve00/{{ ansible_facts['hostname'] }}/docker"
+            "data-root": "/opt/{{ ansible_facts['hostname'] }}/docker"
           }
 
     - name: Restart Docker
