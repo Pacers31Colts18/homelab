@@ -61,7 +61,7 @@ qm set 999 --cicustom "vendor=local:snippets/semaphore-user.yml"
 ## Set Default Cloud-Init User
 ```bash
 qm set 999 --ciuser jloveless123
-qm set 999 --sshkeys ~/.ssh/id_ed25519.pub
+qm set 999 --sshkeys /home/jloveless123/.ssh/id_semaphore.pub
 ```
 
 ## Convert to Template
