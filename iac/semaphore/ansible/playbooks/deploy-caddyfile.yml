@@ -5,7 +5,7 @@
   tasks:
     - name: Copy Caddyfile
       copy:
-        src: ../../../../opt/pve00/caddy00/docker/Caddyfile
+        src: ../files/caddy/Caddyfile
         dest: /opt/pve00/caddy00/docker/Caddyfile
         mode: "0644"
 
