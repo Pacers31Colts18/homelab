@@ -17,7 +17,7 @@ services:
     environment:
       - DNS_SERVER_DOMAIN=joeloveless.net
       - DNS_SERVER_LOG_FOLDER_PATH=/opt/technitium/logs
-      TZ: America/Chicago
+      - TZ=America/Chicago
     volumes:
       - config:/etc/dns:rw
       - logs:/opt/technitium/logs
