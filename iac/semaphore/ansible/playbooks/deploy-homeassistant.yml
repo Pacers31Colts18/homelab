@@ -19,6 +19,12 @@
       command: docker rm -f homeassistant
       ignore_errors: true
 
+    - name: Pull images
+      command: docker compose pull
+      args:
+        chdir: /opt/homeassistant
+      timeout: 600
+
     - name: Start Home Assistant
       command: docker compose up -d
       args:
