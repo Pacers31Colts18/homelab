@@ -7,7 +7,12 @@ nas.joeloveless.net {
 }
 
 homeassistant00.joeloveless.net {
-	reverse_proxy 192.168.4.9:8123
+	reverse_proxy 192.168.4.9:8123 {
+		header_up Host {host}
+		header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {remote_host}
+		header_up X-Forwarded-Proto {scheme}
+	}
 	tls {
 		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 		resolvers 1.1.1.1
