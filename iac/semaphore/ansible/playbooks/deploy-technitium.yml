@@ -1,0 +1,21 @@
+---
+- name: Deploy Technitium
+  hosts: "{{ target_hosts | default('dns00') }}"
+  become: true
+  tasks:
+    - name: Create app directory
+      file:
+        path: /opt/technitium
+        state: directory
+        mode: "0755"
+
+    - name: Copy docker-compose file
+      copy:
+        src: ../files/technitium/docker-compose.yml
+        dest: /opt/technitium/docker-compose.yml
+        mode: "0644"
+
+    - name: Start Technitium
+      command: docker compose up -d
+      args:
+        chdir: /opt/technitium
