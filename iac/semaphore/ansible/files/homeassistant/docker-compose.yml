@@ -13,5 +13,29 @@ services:
       - /dev/ttyUSB0:/dev/ttyUSB0
       - /dev/ttyUSB1:/dev/ttyUSB1
 
+  matter-server:
+    container_name: matter-server
+    image: ghcr.io/matter-js/python-matter-server:stable
+    restart: unless-stopped
+    network_mode: host
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - matter-data:/data
+      - /run/dbus:/run/dbus:ro
+
+  esphome:
+    container_name: esphome
+    image: ghcr.io/esphome/esphome:stable
+    restart: unless-stopped
+    network_mode: host
+    privileged: true
+    environment:
+      - TZ=America/Chicago
+    volumes:
+      - esphome-config:/config
+
 volumes:
   config:
+  matter-data:
+  esphome-config:
