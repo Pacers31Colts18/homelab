@@ -1,0 +1,25 @@
+---
+- name: Deploy Home Assistant
+  hosts: "{{ target_hosts | default('homeassistant00') }}"
+  become: true
+  tasks:
+    - name: Create app directory
+      file:
+        path: /opt/homeassistant
+        state: directory
+        mode: "0755"
+
+    - name: Copy docker-compose file
+      copy:
+        src: ../files/homeassistant/docker-compose.yml
+        dest: /opt/homeassistant/docker-compose.yml
+        mode: "0644"
+
+    - name: Stop existing Home Assistant container
+      command: docker rm -f homeassistant
+      ignore_errors: true
+
+    - name: Start Home Assistant
+      command: docker compose up -d
+      args:
+        chdir: /opt/homeassistant
