@@ -6,8 +6,8 @@ nas.joeloveless.net {
 	}
 }
 
-pulse00.joeloveless.net {
-	reverse_proxy 192.168.4.24:7655
+pulse01.joeloveless.net {
+	reverse_proxy 192.168.4.49:7655
 	tls {
 		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 		resolvers 1.1.1.1
