@@ -17,7 +17,7 @@ services:
     volumes:
       - config:/etc/dns:rw
       - logs:/opt/technitium/logs
-    restart: on-failure:5
+    restart: unless-stopped
 
 volumes:
   config:
