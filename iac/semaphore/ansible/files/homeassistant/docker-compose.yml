@@ -35,7 +35,20 @@ services:
     volumes:
       - esphome-config:/config
 
+  zwavejs:
+    container_name: zwavejs
+    image: zwavejs/zwave-js-ui:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=America/Chicago
+    volumes:
+      - zwavejs-config:/usr/src/app/store
+    devices:
+      - /dev/ttyUSB0:/dev/zwave
+
 volumes:
   config:
   matter-data:
   esphome-config:
+  zwavejs-config:
