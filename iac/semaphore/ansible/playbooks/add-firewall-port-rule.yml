@@ -1,0 +1,20 @@
+---
+- name: Add firewall rule
+  hosts: "{{ target_hosts | default('caddy00') }}"
+  become: true
+  tasks:
+    - name: Validate rule
+      fail:
+        msg: "target_rule must be 'allow' or 'deny', got '{{ target_rule }}'"
+      when: target_rule not in ['allow', 'deny']
+
+    - name: Validate protocol
+      fail:
+        msg: "target_protocol must be 'tcp' or 'udp', got '{{ target_protocol | default('tcp') }}'"
+      when: (target_protocol | default('tcp')) not in ['tcp', 'udp']
+
+    - name: Configure firewall rule
+      community.general.ufw:
+        rule: "{{ target_rule }}"
+        port: "{{ target_port }}"
+        proto: "{{ target_protocol | default('tcp') }}"
