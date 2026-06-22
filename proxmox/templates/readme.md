@@ -13,7 +13,7 @@ qm create 999 --memory 2048 --net0 virtio,bridge=vmbr0 --scsihw virtio-scsi-pci
 
 ## Import and Attach Boot Disk
 ```bash
-qm importdisk 999 ubuntu-26.04-server-cloudimg-amd64v3.img local-lvm
+qm importdisk 999 /var/lib/vz/template/iso/ubuntu-26.04-server-cloudimg-amd64v3.img local-lvm
 qm set 999 --scsi0 local-lvm:vm-999-disk-0
 qm resize 999 scsi0 20G
 ```
