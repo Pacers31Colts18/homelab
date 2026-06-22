@@ -31,7 +31,7 @@
 
     - name: Add Docker repository
       apt_repository:
-        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu {{ ansible_facts['distribution_release'] }} stable"
         filename: docker
         state: present
 
@@ -66,12 +66,12 @@
 
     - name: Create mount point
       file:
-        path: "/opt/pve00/{{ ansible_hostname }}"
+        path: "/opt/pve00/{{ ansible_facts['hostname'] }}"
         state: directory
 
     - name: Mount secondary disk
       mount:
-        path: "/opt/pve00/{{ ansible_hostname }}"
+        path: "/opt/pve00/{{ ansible_facts['hostname'] }}"
         src: /dev/sdb
         fstype: ext4
         opts: defaults
@@ -80,35 +80,20 @@
 
     - name: Set ownership
       file:
-        path: "/opt/pve00/{{ ansible_hostname }}"
+        path: "/opt/pve00/{{ ansible_facts['hostname'] }}"
         owner: jloveless123
         group: jloveless123
-        recurse: true
 
     # Point Docker to secondary disk
-    - name: Create Docker data directory
-      file:
-        path: "/opt/pve00/{{ ansible_hostname }}/docker"
-        state: directory
-        owner: jloveless123
-        group: jloveless123
-
     - name: Configure Docker data-root
       copy:
         dest: /etc/docker/daemon.json
         content: |
           {
-            "data-root": "/opt/pve00/{{ ansible_hostname }}/docker"
+            "data-root": "/opt/pve00/{{ ansible_facts['hostname'] }}/docker"
           }
 
     - name: Restart Docker
       systemd:
         name: docker
         state: restarted
-
-    - name: Set ownership after Docker restart
-      file:
-        path: "/opt/pve00/{{ ansible_hostname }}"
-        owner: jloveless123
-        group: jloveless123
-        recurse: true
