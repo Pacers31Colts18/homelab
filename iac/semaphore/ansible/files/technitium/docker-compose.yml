@@ -13,7 +13,7 @@ services:
     # network_mode: "host"
     ports:
       - "5380:5380/tcp" #DNS web console (HTTP)
-       - "53443:53443/tcp" #DNS web console (HTTPS)
+     # - "53443:53443/tcp" #DNS web console (HTTPS)
       - "53:53/udp" #DNS service
       - "53:53/tcp" #DNS service
       # - "853:853/udp" #DNS-over-QUIC service
@@ -24,7 +24,7 @@ services:
       # - "8053:8053/tcp" #DNS-over-HTTP service (use with reverse proxy)
       # - "67:67/udp" #DHCP service
     environment:
-      - DNS_SERVER_DOMAIN=joeloveless.net #The primary domain name used by this DNS Server to identify itself.
+        - DNS_SERVER_DOMAIN=joeloveless.net #The primary domain name used by this DNS Server to identify itself.
       # - DNS_SERVER_LOG_USING_LOCAL_TIME=true
       # - DNS_SERVER_ADMIN_PASSWORD=password #DNS web console admin user password.
       # - DNS_SERVER_ADMIN_PASSWORD_FILE=password.txt #The path to a file that contains a plain text password for the DNS web console admin user.
@@ -48,17 +48,18 @@ services:
       # - DNS_SERVER_FORWARDERS=1.1.1.1, 8.8.8.8 #Comma separated list of forwarder addresses.
       # - DNS_SERVER_FORWARDER_PROTOCOL=Tcp #Forwarder protocol options: Udp, Tcp, Tls, Https, HttpsJson.
       # - DNS_SERVER_LOG_USING_LOCAL_TIME=true #Enable this option to use local time instead of UTC for logging.
-      - DNS_SERVER_LOG_FOLDER_PATH=/opt/technitium/logs #The folder path on the server where the log files should be saved.
+        - DNS_SERVER_LOG_FOLDER_PATH=/opt/technitium/logs #The folder path on the server where the log files should be saved.
       # - DNS_SERVER_LOG_MAX_LOG_FILE_DAYS=365 #Max number of days to keep the log files. Log files older than the specified number of days will be deleted automatically. Set 0 to disable auto delete.
       # - DNS_SERVER_STATS_ENABLE_IN_MEMORY_STATS=false #This option will enable in-memory stats and only Last Hour data will be available on Dashboard. No stats data will be stored on disk.
       # - DNS_SERVER_STATS_MAX_STAT_FILE_DAYS=365 #Max number of days to keep the dashboard stats. Stat files older than the specified number of days will be deleted automatically. Set 0 to disable auto delete.
-      TZ: America/Chicago
+        TZ: America/Chicago
     volumes:
-      - ./config:/etc/dns:rw
-      - logs:/opt/technitium/logs
-    restart: on-failure:5
+        - ./config:/etc/dns:rw
+        - logs:/opt/technitium/logs
+        restart: on-failure:5
     sysctls:
       - net.ipv4.ip_local_port_range=1024 65535 #remove when using "host" network mode
+
 volumes:
     config:
     logs:
