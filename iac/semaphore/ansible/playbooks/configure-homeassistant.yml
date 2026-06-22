@@ -1,0 +1,17 @@
+---
+- name: Configure Home Assistant
+  hosts: "{{ target_hosts | default('homeassistant00') }}"
+  become: true
+  tasks:
+    - name: Get config volume mount path
+      command: docker inspect -f '{{ '{{' }} range .Mounts {{ '}}' }}{{ '{{' }} if eq .Destination "/config" {{ '}}' }}{{ '{{' }} .Source {{ '}}' }}{{ '{{' }} end {{ '}}' }}{{ '{{' }} end {{ '}}' }}' homeassistant
+      register: config_path
+
+    - name: Deploy configuration.yaml
+      copy:
+        src: ../files/homeassistant/configuration.yaml
+        dest: "{{ config_path.stdout }}/configuration.yaml"
+        mode: "0644"
+
+    - name: Restart Home Assistant
+      command: docker restart homeassistant
