@@ -31,7 +31,7 @@ variable "vm_name" {
 
 variable "cpu_cores" {
   type    = number
-  default = 2
+  default = 1
 }
 
 variable "memory" {
