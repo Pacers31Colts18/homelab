@@ -8,7 +8,7 @@ wget https://cloud-images.ubuntu.com/releases/26.04/release/ubuntu-26.04-server-
 
 ## Create the VM
 ```bash
-qm create 999 --memory 2048 --net0 virtio,bridge=vmbr0 --scsihw virtio-scsi-pci
+qm create 999 --memory 2048 --cores 2 --cpu x86-64-v2-AES --net0 virtio,bridge=vmbr0 --scsihw virtio-scsi-pci
 ```
 
 ## Import and Attach Boot Disk
