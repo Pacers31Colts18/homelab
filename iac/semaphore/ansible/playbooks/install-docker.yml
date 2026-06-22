@@ -1,6 +1,6 @@
 ---
 - name: Install and Configure Docker
-  hosts: "{{ target_hosts | default('all') }}"  become: true
+  hosts: "{{ target_hosts | default('all') }}"
   tasks:
     # Install Docker
     - name: Install prerequisites
