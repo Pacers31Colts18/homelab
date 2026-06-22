@@ -9,11 +9,7 @@ services:
       timeout: 5s
       retries: 3
       start_period: 90s
-    ports:
-      - "5380:5380/tcp" #DNS web console (HTTP)
-      - "53443:53443/tcp" #DNS web console (HTTPS)
-      - "53:53/udp" #DNS service
-      - "53:53/tcp" #DNS service
+    network_mode: host
     environment:
       - DNS_SERVER_DOMAIN=joeloveless.net
       - DNS_SERVER_LOG_FOLDER_PATH=/opt/technitium/logs
@@ -22,8 +18,6 @@ services:
       - config:/etc/dns:rw
       - logs:/opt/technitium/logs
     restart: on-failure:5
-    sysctls:
-      - net.ipv4.ip_local_port_range=1024 65535
 
 volumes:
   config:
