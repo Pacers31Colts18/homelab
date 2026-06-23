@@ -10,8 +10,7 @@ services:
     volumes:
       - config:/config
     devices:
-      - /dev/ttyUSB0:/dev/ttyUSB0
-      - /dev/ttyUSB1:/dev/ttyUSB1
+      - /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_415005E2-if01-port0:/dev/ttyZigbee
 
   matter-server:
     container_name: matter-server
@@ -40,12 +39,15 @@ services:
     image: zwavejs/zwave-js-ui:latest
     restart: unless-stopped
     network_mode: host
+    tty: true
+    stop_signal: SIGINT
     environment:
       - TZ=America/Chicago
+      - SESSION_SECRET=changeme
     volumes:
       - zwavejs-config:/usr/src/app/store
     devices:
-      - /dev/ttyUSB0:/dev/zwave
+      - /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_415005E2-if00-port0:/dev/zwave
 
 volumes:
   config:
