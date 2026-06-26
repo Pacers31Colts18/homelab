@@ -7,7 +7,7 @@
     - name: Add A record to joeloveless.net
       effectivelywild.technitium_dns.technitium_dns_record:
         state: present
-        api_url: "https://dns00.joeloveless.net"
+        api_url: "http://192.168.4.8"
         api_token: "{{ technitium_api_token }}"
         name: "{{ dnsname }}.joeloveless.net"
         zone: "joeloveless.net"
@@ -21,7 +21,7 @@
     - name: Add A record to int.joeloveless.net
       effectivelywild.technitium_dns.technitium_dns_record:
         state: present
-        api_url: "https://dns00.joeloveless.net"
+        api_url: "http://192.168.4.8"
         api_token: "{{ technitium_api_token }}"
         name: "{{ dnsname }}.int.joeloveless.net"
         zone: "int.joeloveless.net"
