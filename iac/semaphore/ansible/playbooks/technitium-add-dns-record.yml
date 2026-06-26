@@ -2,7 +2,7 @@
   technitium_dns_add_record:
     api_url: "https://dns00.joeloveless.net"
     api_token: ${var.technitium_api_token}
-    name: {{ name }}
+    name: {{ dnsname }}
     zone: "joeloveless.net
     type: "A"
     ipAddress: {{ ipaddress }}
@@ -14,7 +14,7 @@
   technitium_dns_add_record:
     api_url: "https://dns00.joeloveless.net"
     api_token: ${var.technitium_api_token}
-    name: {{ name }}
+    name: {{ dnsname }}
     zone: "int.joeloveless.net
     type: "A"
     ipAddress: {{ ipaddress }}
