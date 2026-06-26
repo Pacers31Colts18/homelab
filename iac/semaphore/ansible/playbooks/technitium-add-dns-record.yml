@@ -1,0 +1,23 @@
+- name: joeloveless.net
+  technitium_dns_add_record:
+    api_url: "https://dns00.joeloveless.net"
+    api_token: ${var.technitium_api_token}
+    name: {{ dnsname }}
+    zone: "joeloveless.net
+    type: "A"
+    ipAddress: {{ ipaddress }}
+    ptr: false
+    createPtrZone: false
+    ttl: 3600
+
+- name: int.joeloveless.net
+  technitium_dns_add_record:
+    api_url: "https://dns00.joeloveless.net"
+    api_token: ${var.technitium_api_token}
+    name: {{ dnsname }}
+    zone: "int.joeloveless.net
+    type: "A"
+    ipAddress: {{ ipaddress }}
+    ptr: true
+    createPtrZone: true
+    ttl: 3600
