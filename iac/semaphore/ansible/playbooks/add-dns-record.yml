@@ -1,0 +1,33 @@
+---
+- name: Add DNS records
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Add A record to joeloveless.net
+      effectivelywild.technitium_dns.technitium_dns_record:
+        state: present
+        api_url: "https://dns00.joeloveless.net"
+        api_token: "{{ technitium_api_token }}"
+        name: "{{ dnsname }}.joeloveless.net"
+        zone: "joeloveless.net"
+        type: "A"
+        ipAddress: "{{ ipaddress }}"
+        ptr: false
+        createPtrZone: false
+        ttl: 3600
+        validate_certs: false
+
+    - name: Add A record to int.joeloveless.net
+      effectivelywild.technitium_dns.technitium_dns_record:
+        state: present
+        api_url: "https://dns00.joeloveless.net"
+        api_token: "{{ technitium_api_token }}"
+        name: "{{ dnsname }}.int.joeloveless.net"
+        zone: "int.joeloveless.net"
+        type: "A"
+        ipAddress: "{{ ipaddress }}"
+        ptr: true
+        createPtrZone: true
+        ttl: 3600
+        validate_certs: false
