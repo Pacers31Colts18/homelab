@@ -101,6 +101,18 @@ pve01.joeloveless.net {
 	}
 }
 
+pbs00.joeloveless.net {
+	reverse_proxy https://192.168.4.4:8007 {
+		transport http {
+			tls_insecure_skip_verify
+		}
+	}
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
+
 dns00.joeloveless.net {
 	reverse_proxy 192.168.4.8:5380
 	tls {
