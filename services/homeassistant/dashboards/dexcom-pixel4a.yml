@@ -1,14 +1,12 @@
-title: CGM Display
-kiosk_mode:
-  kiosk: true
 views:
   - title: CGM
     path: cgm
     panel: true
-    subview: true
+    kiosk_mode:
+      kiosk: true
     cards:
       - type: custom:button-card
-        entity: sensor.nloveless_glucose_value
+        entity: sensor.tech_dexcom_glucose_value
         show_icon: false
         show_name: false
         show_state: false
@@ -22,7 +20,7 @@ views:
                 gInt <= 180 ? '#00ff88' :
                 '#ffb347';
 
-              const t = (states['sensor.nloveless_glucose_trend']?.state || '').toLowerCase();
+              const t = (states['sensor.tech_dexcom_glucose_trend']?.state || '').toLowerCase();
               const arrow =
                 t.includes('double') && t.includes('up') ? '⇈' :
                 t.includes('forty') && t.includes('up') ? '↗' :
@@ -67,7 +65,7 @@ views:
             - margin: 0
             - padding: 0
           grid:
-            - grid-template-areas: '"reading"'
+            - grid-template-areas: "\"reading\""
             - justify-items: center
             - align-items: center
           custom_fields:
