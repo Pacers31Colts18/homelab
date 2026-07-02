@@ -1,0 +1,31 @@
+---
+- name: Update Docker containers
+  hosts: "{{ target_hosts | default('pve00-docker-vms') }}"
+  become: true
+  tasks:
+    - name: Find docker-compose stacks under /opt
+      find:
+        paths: /opt
+        recurse: true
+        depth: 2
+        patterns: "docker-compose.yml"
+      register: compose_files
+
+    - name: Pull latest images
+      command: docker compose pull
+      args:
+        chdir: "{{ item.path | dirname }}"
+      loop: "{{ compose_files.files }}"
+      loop_control:
+        label: "{{ item.path | dirname }}"
+
+    - name: Recreate containers with updated images
+      command: docker compose up -d
+      args:
+        chdir: "{{ item.path | dirname }}"
+      loop: "{{ compose_files.files }}"
+      loop_control:
+        label: "{{ item.path | dirname }}"
+
+    - name: Remove dangling images
+      command: docker image prune -f

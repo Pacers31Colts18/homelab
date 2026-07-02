@@ -197,6 +197,17 @@ chown 1001:0 /home/jloveless123/.ssh/known_hosts
 - **Repository:** `homelab`
 - **Inventory:** `Homelab VMs`
 
+### Ansible: Update Docker
+
+- **Type:** Ansible
+- **Name:** `Update Docker`
+- **Playbook:** `iac/semaphore/ansible/playbooks/update-docker.yml`
+- **Repository:** `homelab`
+- **Inventory:** `Homelab VMs`
+- **Survey Variables:** `target_hosts` (optional, defaults to `pve00-docker-vms`)
+
+Finds every `docker-compose.yml` under `/opt` on the target host(s), pulls the latest images, recreates any container whose image changed, and prunes dangling images left behind.
+
 ---
 
 ## 5. Provisioning Workflow
@@ -223,6 +234,7 @@ iac/semaphore/
     playbooks/
       set-hostname.yml    # Set hostname and reboot
       update-ubuntu.yml   # apt update/upgrade
+      update-docker.yml   # Pull + recreate docker-compose stacks under /opt
     inventory/
       hosts.ini           # Static inventory of VMs
 ```
