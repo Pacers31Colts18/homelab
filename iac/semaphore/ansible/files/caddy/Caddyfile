@@ -6,7 +6,7 @@ nas.joeloveless.net {
 	}
 }
 tailscale00.joeloveless.net {
-	reverse_proxy 192.168.4.49
+	reverse_proxy 192.168.4.10
 	tls {
 		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 		resolvers 1.1.1.1
