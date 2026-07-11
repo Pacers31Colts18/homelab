@@ -5,6 +5,11 @@ data "proxmox_virtual_environment_vms" "template" {
     name   = "name"
     values = [var.template_name]
   }
+
+  filter {
+    name   = "template"
+    values = ["true"]
+  }
 }
 
 resource "proxmox_virtual_environment_vm" "vm" {
