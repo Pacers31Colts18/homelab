@@ -5,6 +5,14 @@ nas.joeloveless.net {
 		resolvers 1.1.1.1
 	}
 }
+
+resume00.joeloveless.net {
+	reverse_proxy 192.168.4.12:3000
+	tls {
+		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+		resolvers 1.1.1.1
+	}
+}
 uptimekuma.joeloveless.net {
 	reverse_proxy 192.168.4.125:3444
 	tls {
