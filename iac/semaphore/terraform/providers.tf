@@ -15,7 +15,7 @@ provider "proxmox" {
   ssh {
     agent       = false
     username    = "root"
-    private_key = file("/home/semaphore/.ssh/id_semaphore")
+    private_key = file("/tmp/semaphore/.ssh/id_semaphore")
   }
 
   tmp_dir = "/var/tmp"

@@ -1,6 +1,6 @@
 ---
 - name: Update Ubuntu
-  hosts: all
+  hosts: "{{ target_hosts | default('all') }}"
   become: true
   tasks:
     - name: Update apt cache
