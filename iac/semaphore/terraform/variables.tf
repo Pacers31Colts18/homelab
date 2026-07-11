@@ -21,8 +21,9 @@ variable "proxmox_node" {
 }
 
 
-variable "template_name" {
-  type = string
+variable "template_vm_id" {
+  type    = number
+  default = 998
 }
 
 variable "vm_name" {
