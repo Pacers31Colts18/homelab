@@ -1,0 +1,25 @@
+---
+- name: Deploy ActualBudget
+  hosts: "{{ target_hosts | default('actualbudget00') }}"
+  become: true
+  tasks:
+    - name: Create app directory
+      file:
+        path: /opt/actualbudget00
+        state: directory
+        mode: "0755"
+
+    - name: Copy docker-compose file
+      copy:
+        src: ../files/actualbudget/docker-compose.yml
+        dest: /opt/actualbudget00/docker-compose.yml
+        mode: "0644"
+
+    - name: Stop existing ActualBudget container
+      command: docker rm -f actual-server
+      ignore_errors: true
+
+    - name: Start ActualBudget
+      command: docker compose up -d
+      args:
+        chdir: /opt/actualbudget00
