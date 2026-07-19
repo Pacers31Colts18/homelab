@@ -9,17 +9,28 @@
         state: directory
         mode: "0755"
 
+    - name: Create data directory on secondary drive
+      file:
+        path: /opt/pve00/actualbudget00/docker
+        state: directory
+        mode: "0755"
+
     - name: Copy docker-compose file
       copy:
         src: ../files/actualbudget/docker-compose.yml
         dest: /opt/actualbudget00/docker-compose.yml
         mode: "0644"
+      register: compose_file
 
-    - name: Stop existing ActualBudget container
-      command: docker rm -f actual-server
-      ignore_errors: true
+    - name: Pull latest ActualBudget image
+      command: docker compose pull
+      args:
+        chdir: /opt/actualbudget00
+      register: compose_pull
+      changed_when: "'Pulled' in compose_pull.stdout or 'Downloaded' in compose_pull.stdout"
 
     - name: Start ActualBudget
       command: docker compose up -d
       args:
         chdir: /opt/actualbudget00
+      when: compose_file.changed or compose_pull.changed
