@@ -1,0 +1,17 @@
+---
+- name: Configure Mosquitto
+  hosts: "{{ target_hosts | default('homeassistant00') }}"
+  become: true
+  tasks:
+    - name: Get config volume mount path
+      command: docker inspect -f '{{ '{{' }} range .Mounts {{ '}}' }}{{ '{{' }} if eq .Destination "/mosquitto/config" {{ '}}' }}{{ '{{' }} .Source {{ '}}' }}{{ '{{' }} end {{ '}}' }}{{ '{{' }} end {{ '}}' }}' mosquitto
+      register: config_path
+
+    - name: Deploy mosquitto.conf
+      copy:
+        src: ../files/homeassistant/mosquitto.conf
+        dest: "{{ config_path.stdout }}/mosquitto.conf"
+        mode: "0644"
+
+    - name: Restart Mosquitto
+      command: docker restart mosquitto

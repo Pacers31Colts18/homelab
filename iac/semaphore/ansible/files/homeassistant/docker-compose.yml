@@ -49,8 +49,23 @@ services:
     devices:
       - /dev/serial/by-id/usb-Silicon_Labs_HubZ_Smart_Home_Controller_415005E2-if00-port0:/dev/zwave
 
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=America/Chicago
+    volumes:
+      - mosquitto-config:/mosquitto/config
+      - mosquitto-data:/mosquitto/data
+      - mosquitto-log:/mosquitto/log
+
 volumes:
   config:
   matter-data:
   esphome-config:
   zwavejs-config:
+  mosquitto-config:
+  mosquitto-data:
+  mosquitto-log:
