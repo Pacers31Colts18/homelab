@@ -23,4 +23,4 @@ volumes:
     driver_opts:
       type: nfs
       o: rw,nfsvers=4
-      device: "nas.joeloveless.net:/volume1/data"
+      device: "nas.int.joeloveless.net:/volume1/data"
