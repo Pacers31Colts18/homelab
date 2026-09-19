@@ -1,1 +1,26 @@
+services:
+  nzbget:
+    image: ghcr.io/linuxserver/nzbget:latest
+    container_name: NZBGet
+    environment:
+       PUID: 1000
+       PGID: 10
+       TZ: America/Chicago
+       NZBGET_USER: ${NZBGET_USER}
+       NZBGET_PASS: ${NZBGET_PASS}
+    volumes:
+      - /opt/nzbget00/config:/config
+      - nzbget_data:/data
+    ports:
+      - 6789:6789
+    extra_hosts:
+      - ultron.local:192.168.4.125
+    restart: on-failure:5
 
+volumes:
+  nzbget_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: rw,nfsvers=4
+      device: "nas.joeloveless.net:/volume1/data"
