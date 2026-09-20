@@ -3,9 +3,9 @@ services:
     image: ghcr.io/linuxserver/nzbget:latest
     container_name: NZBGet
     environment:
-       PUID: 1000
-       PGID: 10
-       TZ: America/Chicago
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
        NZBGET_USER: ${NZBGET_USER}
        NZBGET_PASS: ${NZBGET_PASS}
     volumes:
@@ -21,9 +21,9 @@ services:
     image: lscr.io/linuxserver/prowlarr:latest
     container_name: Prowlarr
     environment:
-       PUID: 1000
-       PGID: 10
-       TZ: America/Chicago
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
     volumes:
       - /opt/docker/prowlarr/config:/config
     ports:
@@ -34,9 +34,9 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: Radarr
     environment:
-       PUID: 1000
-       PGID: 10
-       TZ: America/Chicago
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
     volumes:
       - /opt/docker/radarr/config:/config
       - media_data:/data
@@ -48,9 +48,9 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: Sonarr
     environment:
-       PUID: 1000
-       PGID: 10
-       TZ: America/Chicago
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
     volumes:
       - /opt/docker/sonarr/config:/config
       - media_data:/data
@@ -62,9 +62,9 @@ services:
     image: lscr.io/linuxserver/lidarr:latest
     container_name: Lidarr
     environment:
-       PUID: 1000
-       PGID: 10
-       TZ: America/Chicago
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
     volumes:
       - /opt/docker/lidarr/config:/config
       - media_data:/data
@@ -76,9 +76,9 @@ services:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: Bazarr
     environment:
-       PUID: 1000
-       PGID: 10
-       TZ: America/Chicago
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
     volumes:
       - /opt/docker/bazarr/config:/config
       - media_data:/data
@@ -91,5 +91,5 @@ volumes:
     driver: local
     driver_opts:
       type: nfs
-      o: "addr=nas.int.joeloveless.net,rw,nfsvers=3"
+      o: "addr=${NAS_HOST},rw,nfsvers=3"
       device: ":/volume1/data"
