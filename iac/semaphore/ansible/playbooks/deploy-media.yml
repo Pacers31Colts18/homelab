@@ -1,58 +1,95 @@
----
-- name: Deploy Media Stack
-  hosts: "{{ target_hosts | default('nzbget00') }}"
-  become: true
+services:
+  nzbget:
+    image: ghcr.io/linuxserver/nzbget:latest
+    container_name: NZBGet
+    environment:
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
+       NZBGET_USER: ${NZBGET_USER}
+       NZBGET_PASS: ${NZBGET_PASS}
+    volumes:
+      - /opt/docker/nzbget/config:/config
+      - media_data:/data
+    ports:
+      - 6789:6789
+    extra_hosts:
+      - ultron.local:192.168.4.125
+    restart: on-failure:5
 
-  vars:
-    stack_dir: /opt/media
-    apps:
-      - nzbget
-      - prowlarr
-      - radarr
-      - sonarr
-      - lidarr
-      - bazarr
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: Prowlarr
+    environment:
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
+    volumes:
+      - /opt/docker/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
 
-  tasks:
-    - name: Create stack directory
-      ansible.builtin.file:
-        path: "{{ stack_dir }}"
-        state: directory
-        mode: "0755"
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: Radarr
+    environment:
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
+    volumes:
+      - /opt/docker/radarr/config:/config
+      - media_data:/data
+    ports:
+      - 7878:7878
+    restart: unless-stopped
 
-    - name: Create per-app config directories
-      ansible.builtin.file:
-        path: "/opt/docker/{{ item }}/config"
-        state: directory
-        mode: "0755"
-      loop: "{{ apps }}"
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: Sonarr
+    environment:
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
+    volumes:
+      - /opt/docker/sonarr/config:/config
+      - media_data:/data
+    ports:
+      - 8989:8989
+    restart: unless-stopped
 
-    - name: Copy docker-compose file
-      ansible.builtin.copy:
-        src: ../files/nzbget/docker-compose.yml
-        dest: "{{ stack_dir }}/docker-compose.yml"
-        mode: "0644"
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: Lidarr
+    environment:
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
+    volumes:
+      - /opt/docker/lidarr/config:/config
+      - media_data:/data
+    ports:
+      - 8686:8686
+    restart: unless-stopped
 
-    - name: Remove legacy standalone NZBGet container (if present)
-      ansible.builtin.command: docker rm -f NZBGet
-      ignore_errors: true
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: Bazarr
+    environment:
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
+    volumes:
+      - /opt/docker/bazarr/config:/config
+      - media_data:/data
+    ports:
+      - 6767:6767
+    restart: unless-stopped
 
-    - name: Stop existing stack (if running)
-      ansible.builtin.command: docker compose down
-      args:
-        chdir: "{{ stack_dir }}"
-      ignore_errors: true
-
-    - name: Pull images
-      ansible.builtin.command: docker compose pull
-      args:
-        chdir: "{{ stack_dir }}"
-      timeout: 600
-
-    - name: Start media stack
-      ansible.builtin.command: docker compose up -d
-      args:
-        chdir: "{{ stack_dir }}"
-      environment:
-        NZBGET_USER: "{{ nzbget_user }}"
-        NZBGET_PASS: "{{ nzbget_pass }}"
+volumes:
+  media_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=${NAS_HOST},rw,nfsvers=3"
+      device: ":/volume1/data"
