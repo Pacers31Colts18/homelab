@@ -29,7 +29,7 @@
 
     - name: Copy docker-compose file
       ansible.builtin.copy:
-        src: ../files/nzbget/docker-compose.yml
+        src: ../files/media/docker-compose.yml
         dest: "{{ stack_dir }}/docker-compose.yml"
         mode: "0644"
 
