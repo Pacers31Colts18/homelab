@@ -53,6 +53,3 @@
       ansible.builtin.command: docker compose up -d
       args:
         chdir: "{{ stack_dir }}"
-      environment:
-        NZBGET_USER: "{{ nzbget_user }}"
-        NZBGET_PASS: "{{ nzbget_pass }}"
