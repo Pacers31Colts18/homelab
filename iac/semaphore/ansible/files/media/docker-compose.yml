@@ -1,0 +1,95 @@
+services:
+  nzbget:
+    image: ghcr.io/linuxserver/nzbget:latest
+    container_name: NZBGet
+    environment:
+       PUID: 1000
+       PGID: 10
+       TZ: America/Chicago
+       NZBGET_USER: ${NZBGET_USER}
+       NZBGET_PASS: ${NZBGET_PASS}
+    volumes:
+      - /opt/docker/nzbget/config:/config
+      - media_data:/data
+    ports:
+      - 6789:6789
+    extra_hosts:
+      - ultron.local:192.168.4.125
+    restart: on-failure:5
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: Prowlarr
+    environment:
+       PUID: 1000
+       PGID: 10
+       TZ: America/Chicago
+    volumes:
+      - /opt/docker/prowlarr/config:/config
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: Radarr
+    environment:
+       PUID: 1000
+       PGID: 10
+       TZ: America/Chicago
+    volumes:
+      - /opt/docker/radarr/config:/config
+      - media_data:/data
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: Sonarr
+    environment:
+       PUID: 1000
+       PGID: 10
+       TZ: America/Chicago
+    volumes:
+      - /opt/docker/sonarr/config:/config
+      - media_data:/data
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: Lidarr
+    environment:
+       PUID: 1000
+       PGID: 10
+       TZ: America/Chicago
+    volumes:
+      - /opt/docker/lidarr/config:/config
+      - media_data:/data
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: Bazarr
+    environment:
+       PUID: 1000
+       PGID: 10
+       TZ: America/Chicago
+    volumes:
+      - /opt/docker/bazarr/config:/config
+      - media_data:/data
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+volumes:
+  media_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=nas.int.joeloveless.net,rw,nfsvers=3"
+      device: ":/volume1/data"
