@@ -24,6 +24,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
+       PROWLARR__AUTH__METHOD: Forms
+       PROWLARR__AUTH__REQUIRED: Enabled
+       PROWLARR__AUTH__USERNAME: ${ARR_USER}
+       PROWLARR__AUTH__PASSWORD: ${ARR_PASS}
     volumes:
       - /opt/docker/prowlarr/config:/config
     ports:
@@ -37,6 +41,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
+       RADARR__AUTH__METHOD: Forms
+       RADARR__AUTH__REQUIRED: Enabled
+       RADARR__AUTH__USERNAME: ${ARR_USER}
+       RADARR__AUTH__PASSWORD: ${ARR_PASS}
     volumes:
       - /opt/docker/radarr/config:/config
       - media_data:/data
@@ -51,6 +59,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
+       SONARR__AUTH__METHOD: Forms
+       SONARR__AUTH__REQUIRED: Enabled
+       SONARR__AUTH__USERNAME: ${ARR_USER}
+       SONARR__AUTH__PASSWORD: ${ARR_PASS}
     volumes:
       - /opt/docker/sonarr/config:/config
       - media_data:/data
@@ -65,6 +77,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
+       LIDARR__AUTH__METHOD: Forms
+       LIDARR__AUTH__REQUIRED: Enabled
+       LIDARR__AUTH__USERNAME: ${ARR_USER}
+       LIDARR__AUTH__PASSWORD: ${ARR_PASS}
     volumes:
       - /opt/docker/lidarr/config:/config
       - media_data:/data
@@ -79,6 +95,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
+       BAZARR__AUTH__METHOD: Forms
+       BAZARR__AUTH__REQUIRED: Enabled
+       BAZARR__AUTH__USERNAME: ${ARR_USER}
+       BAZARR__AUTH__PASSWORD: ${ARR_PASS}
     volumes:
       - /opt/docker/bazarr/config:/config
       - media_data:/data
