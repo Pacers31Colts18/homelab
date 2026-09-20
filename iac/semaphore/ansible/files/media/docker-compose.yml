@@ -9,7 +9,7 @@ services:
        NZBGET_USER: ${NZBGET_USER}
        NZBGET_PASS: ${NZBGET_PASS}
     volumes:
-      - /opt/docker/nzbget/config:/config
+      - /opt/media/nzbget/config:/config
       - media_data:/data
     ports:
       - 6789:6789
@@ -24,10 +24,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       PROWLARR__AUTH__METHOD: Forms
+       PROWLARR__AUTH__METHOD: External
        PROWLARR__AUTH__REQUIRED: Enabled
     volumes:
-      - /opt/docker/prowlarr/config:/config
+      - /opt/media/prowlarr/config:/config
     ports:
       - 9696:9696
     restart: unless-stopped
@@ -39,10 +39,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       RADARR__AUTH__METHOD: Forms
+       RADARR__AUTH__METHOD: External
        RADARR__AUTH__REQUIRED: Enabled
     volumes:
-      - /opt/docker/radarr/config:/config
+      - /opt/media/radarr/config:/config
       - media_data:/data
     ports:
       - 7878:7878
@@ -55,10 +55,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       SONARR__AUTH__METHOD: Forms
+       SONARR__AUTH__METHOD: External
        SONARR__AUTH__REQUIRED: Enabled
     volumes:
-      - /opt/docker/sonarr/config:/config
+      - /opt/media/sonarr/config:/config
       - media_data:/data
     ports:
       - 8989:8989
@@ -71,10 +71,10 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       LIDARR__AUTH__METHOD: Forms
+       LIDARR__AUTH__METHOD: External
        LIDARR__AUTH__REQUIRED: Enabled
     volumes:
-      - /opt/docker/lidarr/config:/config
+      - /opt/media/lidarr/config:/config
       - media_data:/data
     ports:
       - 8686:8686
@@ -87,10 +87,8 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       BAZARR__AUTH__METHOD: Forms
-       BAZARR__AUTH__REQUIRED: Enabled
     volumes:
-      - /opt/docker/bazarr/config:/config
+      - /opt/media/bazarr/config:/config
       - media_data:/data
     ports:
       - 6767:6767
