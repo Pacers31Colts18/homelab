@@ -7,7 +7,7 @@ prowlarr00.joeloveless.net {
 }
 
 clonarr00.joeloveless.net {
-	reverse_proxy 192.168.4.13:9696
+	reverse_proxy 192.168.4.13:6060
 	tls {
 		dns cloudflare {env.CLOUDFLARE_API_TOKEN}
 		resolvers 1.1.1.1
