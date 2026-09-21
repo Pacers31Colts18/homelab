@@ -12,6 +12,7 @@
       - sonarr
       - lidarr
       - bazarr
+      - clonarr
 
   tasks:
     - name: Stop existing stack (if running)
