@@ -86,6 +86,19 @@ services:
       - 6767:6767
     restart: unless-stopped
 
+  clonarr:
+    image: ghcr.io/prophetse7en/clonarr:latest
+    container_name: clonarr
+    restart: unless-stopped
+    ports:
+      - "6060:6060"
+    environment:
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
+    volumes:
+      - /opt/media/clonarr/config:/config
+
 volumes:
   media_data:
     driver: local
