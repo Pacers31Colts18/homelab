@@ -24,8 +24,6 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       PROWLARR__AUTH__METHOD: External
-       PROWLARR__AUTH__REQUIRED: Enabled
     volumes:
       - /opt/media/prowlarr/config:/config
     ports:
@@ -39,8 +37,6 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       RADARR__AUTH__METHOD: External
-       RADARR__AUTH__REQUIRED: Enabled
     volumes:
       - /opt/media/radarr/config:/config
       - media_data:/data
@@ -55,8 +51,6 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       SONARR__AUTH__METHOD: External
-       SONARR__AUTH__REQUIRED: Enabled
     volumes:
       - /opt/media/sonarr/config:/config
       - media_data:/data
@@ -71,8 +65,6 @@ services:
        PUID: ${PUID}
        PGID: ${PGID}
        TZ: ${TZ}
-       LIDARR__AUTH__METHOD: External
-       LIDARR__AUTH__REQUIRED: Enabled
     volumes:
       - /opt/media/lidarr/config:/config
       - media_data:/data
