@@ -99,6 +99,24 @@ services:
     volumes:
       - /opt/media/clonarr/config:/config
 
+  slskd:
+    image: slskd/slskd:latest
+    container_name: slskd
+    environment:
+       PUID: ${PUID}
+       PGID: ${PGID}
+       TZ: ${TZ}
+       SLSKD_REMOTE_CONFIGURATION: "true"
+       SLSKD_SLSK_USERNAME: ${SLSKD_USERNAME}
+       SLSKD_SLSK_PASSWORD: ${SLSKD_PASSWORD}
+    volumes:
+      - /opt/media/slskd/config:/app
+      - media_data:/data
+    ports:
+      - 5030:5030
+      - 50300:50300
+    restart: unless-stopped
+
 volumes:
   media_data:
     driver: local
