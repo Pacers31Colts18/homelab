@@ -107,8 +107,10 @@ services:
        PGID: ${PGID}
        TZ: ${TZ}
        SLSKD_REMOTE_CONFIGURATION: "true"
-       SLSKD_SLSK_USERNAME: ${SLSKD_USERNAME}
-       SLSKD_SLSK_PASSWORD: ${SLSKD_PASSWORD}
+       SLSKD_USERNAME: ${SLSKD_WEBUI_USER}
+       SLSKD_PASSWORD: ${SLSKD_WEBUI_PASS}
+       SLSKD_SLSK_USERNAME: ${SLSKD_SLSK_USERNAME}
+       SLSKD_SLSK_PASSWORD: ${SLSKD_SLSK_PASSWORD}
     volumes:
       - /opt/media/slskd/config:/app
       - media_data:/data
