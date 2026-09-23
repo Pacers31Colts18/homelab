@@ -99,7 +99,7 @@ services:
     volumes:
       - /opt/media/clonarr/config:/config
 
-    slskd:
+  slskd:
     image: slskd/slskd:latest
     container_name: slskd
     environment:
