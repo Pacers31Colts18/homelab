@@ -13,6 +13,7 @@
       - lidarr
       - bazarr
       - clonarr
+      - slskd
 
   tasks:
     - name: Stop existing stack (if running)
@@ -25,19 +26,13 @@
       ansible.builtin.command: docker rm -f NZBGet
       ignore_errors: true
 
-    - name: Wipe existing app config directories (clean slate)
-      ansible.builtin.file:
-        path: "{{ stack_dir }}/{{ item }}/config"
-        state: absent
-      loop: "{{ apps }}"
-
     - name: Create stack directory
       ansible.builtin.file:
         path: "{{ stack_dir }}"
         state: directory
         mode: "0755"
 
-    - name: Create per-app config directories
+    - name: Create per-app config directories (only if missing)
       ansible.builtin.file:
         path: "{{ stack_dir }}/{{ item }}/config"
         state: directory
