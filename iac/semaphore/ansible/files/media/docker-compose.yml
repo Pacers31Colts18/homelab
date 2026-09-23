@@ -99,7 +99,7 @@ services:
     volumes:
       - /opt/media/clonarr/config:/config
 
-  slskd:
+    slskd:
     image: slskd/slskd:latest
     container_name: slskd
     environment:
@@ -107,8 +107,8 @@ services:
        PGID: ${PGID}
        TZ: ${TZ}
        SLSKD_REMOTE_CONFIGURATION: "true"
-       SLSKD_USERNAME: ${SLSKD_WEBUI_USER}
-       SLSKD_PASSWORD: ${SLSKD_WEBUI_PASS}
+       SLSKD_USERNAME: ${SLSKD_USERNAME}
+       SLSKD_PASSWORD: ${SLSKD_PASSWORD}
        SLSKD_SLSK_USERNAME: ${SLSKD_SLSK_USERNAME}
        SLSKD_SLSK_PASSWORD: ${SLSKD_SLSK_PASSWORD}
     volumes:
